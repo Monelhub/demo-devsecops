@@ -1,4 +1,3 @@
 # ⚠️ VERSION VOLONTAIREMENT VULNÉRABLE (pour la démo)
-AWS_ACCESS_KEY_ID     = "AKIAIOSFODNN7EXAMPLE"
-AWS_SECRET_ACCESS_KEY = "wJalrXUtnFEMI/K7MDENG/bPxRfiCYEXAMPLEKEY"
-DB_PASSWORD           = "P@ssw0rd-SuperSecret-2026"
+api_key     = "kx9mpq2lrs7tvw4zbn8chj1df5gk3ae6yu0wi2q"
+db_password = "prod_db_8f4ka93ldk2mz7qp0ric5te1xn6b"
