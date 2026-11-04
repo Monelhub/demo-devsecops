@@ -8,9 +8,9 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - name: Scan des secrets (Gitleaks)
-        run: |
-          docker run --rm -v "$PWD:/repo" ghcr.io/gitleaks/gitleaks:latest \
-            detect --no-git --source /repo -v
+        uses: gitleaks/gitleaks-action@v3
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
   infrastructure:
     name: "🏗️ Scan de l'infrastructure (IaC)"
@@ -27,9 +27,13 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - uses: aquasecurity/trivy-action@master
+      - name: Scan des dépendances (Trivy)
+        uses: aquasecurity/trivy-action@master
         with:
           scan-type: fs
           scan-ref: .
           severity: HIGH,CRITICAL
           exit-code: "1"
+          skip-dirs: ".git"
+        env:
+          TRIVY_DB_REPOSITORY: public.ecr.aws/aquasecurity/trivy-db
