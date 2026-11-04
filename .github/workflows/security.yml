@@ -1,0 +1,35 @@
+name: Pipeline de sécurité
+on: [push, pull_request, workflow_dispatch]
+
+jobs:
+  secrets:
+    name: "🔑 Scan des secrets"
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Scan des secrets (Gitleaks)
+        run: |
+          docker run --rm -v "$PWD:/repo" ghcr.io/gitleaks/gitleaks:latest \
+            detect --no-git --source /repo -v
+
+  infrastructure:
+    name: "🏗️ Scan de l'infrastructure (IaC)"
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: bridgecrewio/checkov-action@v12
+        with:
+          directory: infra/
+          check: CKV_AWS_20,CKV_AWS_24
+
+  dependances:
+    name: "📦 Scan des dépendances"
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: aquasecurity/trivy-action@master
+        with:
+          scan-type: fs
+          scan-ref: .
+          severity: HIGH,CRITICAL
+          exit-code: "1"
