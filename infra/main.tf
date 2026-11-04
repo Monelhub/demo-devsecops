@@ -8,7 +8,7 @@ resource "aws_s3_bucket" "data" {
 
 resource "aws_s3_bucket_acl" "data_acl" {
   bucket = aws_s3_bucket.data.id
-  acl    = "private"          # ❌ bucket public
+  acl    = "public-read"          # ❌ bucket public
 }
 
 resource "aws_security_group" "web" {
