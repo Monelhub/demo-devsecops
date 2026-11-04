@@ -17,6 +17,6 @@ resource "aws_security_group" "web" {
     from_port   = 22
     to_port     = 22
     protocol    = "tcp"
-    cidr_blocks = ["203.0.113.4/32"]   # ❌ SSH ouvert à tout Internet
+    cidr_blocks = ["0.0.0.0/0"]   # ❌ SSH ouvert à tout Internet
   }
 }
