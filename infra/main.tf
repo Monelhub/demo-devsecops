@@ -8,7 +8,7 @@ resource "aws_s3_bucket" "data" {
 
 resource "aws_s3_bucket_acl" "data_acl" {
   bucket = aws_s3_bucket.data.id
-  acl    = "public-read"          # ❌ bucket public
+  acl    = "private"          # ❌ bucket public
 }
 
 resource "aws_security_group" "web" {
@@ -17,6 +17,6 @@ resource "aws_security_group" "web" {
     from_port   = 22
     to_port     = 22
     protocol    = "tcp"
-    cidr_blocks = ["0.0.0.0/0"]   # ❌ SSH ouvert à tout Internet
+    cidr_blocks = ["10.0.4.255/32"]   # ❌ SSH ouvert à tout Internet
   }
 }
